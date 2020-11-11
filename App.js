@@ -30,6 +30,7 @@ const App = () => {
             </li>
           </ul>
         </nav>
+        <main>
         <${Switch}>
           <${Route} path="/people">
             <${People} />
@@ -41,6 +42,7 @@ const App = () => {
             <${Home} />
           </${Route}>
         </${Switch}>
+        </main>
       </div>
     </${Router}>
   `;

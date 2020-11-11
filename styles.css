@@ -1,0 +1,40 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+nav {
+  background: blueviolet;
+}
+nav ul {
+  display: flex;
+}
+
+nav ul li {
+  list-style: none;
+}
+
+nav ul li a {
+  color: white;
+  background: blueviolet;
+  padding: 1em;
+  display: block;
+}
+
+
+nav ul li a:hover {
+  background: white;
+  color: blueviolet;
+}
+
+a {
+  text-decoration: none;
+}
+
+main {
+  padding: 2em;
+}
