@@ -4,35 +4,24 @@ import { Link } from 'react-router-dom';
 
 export default function SelectedPerson(props) {
 
-  const [error, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [person, setPerson] = useState(null);
-
   const html = htm.bind(createElement);
 
-  useEffect(() => {
-    if(props.selected) {
-      const url = `https://swapi.dev/api/people/${props.selected}`;
-      fetch(url)
-        .then(res => res.json())
-        .then(result => {
-          setIsLoaded(true);
-          setPerson(result);
-        },
-          (error) => {
-            setIsLoaded(true);
-            setPeopleErr(error);
-          });
-    }
-  }, []);
-
-  if(error) {
-    return html`<div>Error: { error.message}</div>`;
-  } else if(!isLoaded) {
-    return html`<div>Loading...</div>`;
+  const person = props.selected;
+  if(!person) {
+    return html`<div>Please select a person</div>`;
   } else {
     return html`
-    <h1>${person && person.name}</h1>
+    <h1>${person.name}</h1>
+    <table>
+    <tbody>
+    <tr><td>Height:</td><td>${person.height}</td></tr>
+    <tr><td>Mass:</td><td>${person.mass}</td></tr>
+    <tr><td>Hair color:</td><td>${person.hair_color}</td></tr>
+    <tr><td>Gender:</td><td>${person.gender}</td></tr>
+    <tr><td>Birth year:</td><td>${person.birth_year}</td></tr>
+    <tr><td>Homeworld:</td><td>${person.homeworld}</td></tr>
+    </tbody>
+    </table>
     `;
   }
 

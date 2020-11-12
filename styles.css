@@ -14,7 +14,7 @@ nav ul {
   display: flex;
 }
 
-nav ul li {
+li {
   list-style: none;
 }
 
@@ -37,4 +37,13 @@ a {
 
 main {
   padding: 2em;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+}
+
+.people-list li {
+  padding: .5em;
 }
