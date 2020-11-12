@@ -1,25 +1,55 @@
-import React from 'react';
+import { useState, useEffect, createElement} from "react";
 import htm from 'htm';
-const html = htm.bind(React.createElement);
+import { Link } from 'react-router-dom';
+import SelectedPerson from './SelectedPerson.js';
 
-export default function People() {
-  let people = [];
+export default function PeoplePage(props) {
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [items, setItems] = useState([]);
+  const [selected, setSelected] = useState(null);
 
-  (async () => {
-    const response = await fetch('https://swapi.dev/people/');
-    people = await response.json();
-  })();
+  const html = htm.bind(createElement);
 
-  const list = people.map((p,index) => {
+  useEffect(() => {
+    fetch('https://swapi.dev/api/people/')
+      .then(res => res.json())
+      .then(result => {
+        setIsLoaded(true);
+        setItems(result.results);
+      },
+        (error) => {
+          setIsLoaded(true);
+          setError(error);
+        })
+  }, []);
+
+  useEffect(() => {
+  function selectPeople(ev, id) {
+    ev.preventDefault();
+    setSelected(id);
+  }
+  })
+
+  if(error) {
+    return html`<div>Error: { error.message}</div>`;
+  } else if(!isLoaded) {
+    return html`<div>Loading...</div>`;
+  } else {
     return html`
-    <li><a href="/people/${++index}">${p.name}</a></li>
-    `;
-  }).join('\n');
-
-  return html`
-    <h1>People</h1>
     <ul>
-    ${list}
+    ${items.map((item,index) =>  { 
+      return html`
+        <li key=${index}>
+        <a href="#" onClick=${(ev) => selectPeople(ev, ++index) }>${item.name}</a>
+        </li>
+        `;
+    _})
+    }
     </ul>
+    <${SelectedPerson} selected=${selected}/>
+    
     `;
+  }
+
 }
